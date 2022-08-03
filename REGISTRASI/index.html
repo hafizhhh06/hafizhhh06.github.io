@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> REGISTRASI </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="container">
+    <div class="title"style="text-align: center;">FORM REGISTRASI</div>
+    <div class="content">
+      <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+        <strong>Terima kasih!</strong> Data anda sudah kami terima
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+     <form name="SPPT">
+        <div id="form_alerts"></div>
+        <div class="user-details">
+          <div class="input-box">
+             <label for="NOMOR_SPPT" class="form-label">Nomor SPPT</label>
+              <input type="text" id="NOMOR_SPPT" name="NOMOR_SPPT" class="form-control" placeholder="Masukan nomor SPPT" required>
+          </div>
+          <div class="input-box">
+            <label for="NAMA_LENGKAP" class="form-label">Nama Lengkap</label>
+              <input type="text" id="NAMA_LENGKAP" name="NAMA_LENGKAP" class="form-control" placeholder="Masukan nama lengkap" required>
+          </div>
+          <div class="input-box">
+            <label for="ALAMAT" class="form-label">Alamat Wajib Pajak</label>
+               <input type="text" id="ALAMAT" name="ALAMAT" class="form-control" placeholder="Masukan alamat wajib pajak" required>
+           </div>
+           <div class="input-box">
+           <label for="NILAI_OBJEK" class="form-label">Nilai Objek Pajak</label>
+              <input type="text" id="NILAI_OBJEK" name="NILAI_OBJEK" class="form-control" placeholder="Masukan nilai objek pajak " required>
+          </div>
+           <div class="input-box">
+           <label for="TANGGAL_PENYERAHAN" class="form-label">Tanggal Penyerahan SPPT</label>
+              <input type="date" id="TANGGAL_PENYERAHAN" name="TANGGAL_PENYERAHAN" class="form-control" placeholder="Masukan tanggal penyerahan SPPT " required>
+          </div>
+          <div class="input-box">
+            <label for="PETUGAS_DISTRIBUSI" class="form-label">Petugas Distribusi SPPT</label>
+              <input type="text" id="PETUGAS_DISTRIBUSI" name="PETUGAS_DISTRIBUSI" class="form-control" placeholder="Masukan nama petugas distribusi SPPT" required>
+          </div>
+          <div class="input-box">
+            <label for="PETUGAS_PENYERAHAN" class="form-label">Petugas Penyerahan SPPT</label>
+              <input type="text" id="PETUGAS_PENYERAHAN" name="PETUGAS_PENYERAHAN" class="form-control" placeholder="Masukan nama petugas penyerahan SPPT" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-kirim">Kirim</button>
+
+        <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyec7Uqljmw3UeIIDY6eS3rIzsbwQi-ODqdWF3sQSlKVBBoX3fXVOiyqxljPX-XIG_K/exec'
+        const form = document.forms['SPPT']
+        const btnKirim = document.querySelector('.btn-kirim')
+        const btnLoading = document.querySelector('.btn-loading')
+        const myAlert = document.querySelector('.my-alert')
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            //tampilkan tombol loading, hilangkan tombol kirim
+            btnLoading.classList.toggle('d-none')
+            btnKirim.classList.toggle('d-none')
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+              //tampilkan tombol kirim, hilangkan tombol loading
+              btnLoading.classList.toggle('d-none')
+              btnKirim.classList.toggle('d-none')
+              // tampilkan alert
+              myAlert.classList.toggle('d-none')
+              // reset form
+              form.reset()
+              console.log('Success!', response)
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+
+</body>
+</html>
